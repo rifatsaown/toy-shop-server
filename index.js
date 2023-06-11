@@ -26,7 +26,8 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect(); // This is not required if `autoConnect` is set to `true`
+        // Create Problem in vercel
         const legoColection = client.db("BDLego").collection("legoToys");
 
         app.get('/alllego', async (req, res) => {
@@ -76,6 +77,28 @@ async function run() {
             const result = await legoColection.insertOne(newlego);
             res.json(result);
         });
+        app.delete('/delete/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await legoColection.deleteOne(query);
+            res.json(result);
+        })
+        app.patch('/update/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const updatedlego = req.body;
+            console.log(updatedlego);
+            const filter = { _id: new ObjectId(id) };
+            const updateDoc = {
+                $set: {
+                    price: updatedlego.price,
+                    stock: updatedlego.stock,
+                    description: updatedlego.description
+                },
+            };
+            const result = await legoColection.updateOne(filter, updateDoc);
+            res.json(result);
+        })
 
 
         // Send a ping to confirm a successful connection
