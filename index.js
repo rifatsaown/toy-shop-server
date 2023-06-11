@@ -44,19 +44,21 @@ async function run() {
             const alllego = await cursor.toArray();
             res.send(alllego);
         });
-        // Single Toy API Using ID as a query
+        // Data Get As per Name Of the Toy
         app.get('/lego', async (req, res) => {
             const query = req.query;
             const lego = await legoColection.findOne(query);
             res.send(lego);
         });
+        // Data Get As per Category
         app.get('/legos', async (req, res) => {
             const query = req.query;
             const cursor = legoColection.find(query);
             const alllego = await cursor.toArray();
             res.send(alllego);
         });
-
+        
+        // get all the Category API
         app.get('/category', async (req, res) => {
             const cursor = legoColection.find({});
             const alllego = await cursor.toArray();
@@ -68,6 +70,7 @@ async function run() {
             });
             res.send(categories);
         });
+        // get Toy data as id API
         app.get('/toys/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -75,17 +78,22 @@ async function run() {
             res.send(lego);
         })
 
+        // Add Toy To the Database
         app.post('/addlego', async (req, res) => {
             const newlego = req.body;
             const result = await legoColection.insertOne(newlego);
             res.json(result);
         });
+
+        // Delete Toy From the Database
         app.delete('/delete/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
             const result = await legoColection.deleteOne(query);
             res.json(result);
         })
+
+        // Update a Toy Info in the Database
         app.patch('/update/:id', async (req, res) => {
             const id = req.params.id;
             console.log(id);
