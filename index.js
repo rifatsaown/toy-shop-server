@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+// Use dotenv to read .env vars into Node
 require('dotenv').config();
 const cors = require('cors');
 const port = process.env.PORT || 5000;
+// Mongo DB connection
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@cluster0.meus3dj.mongodb.net/?retryWrites=true&w=majority`;
 
