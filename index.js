@@ -31,18 +31,20 @@ async function run() {
         // await client.connect(); // This is not required if `autoConnect` is set to `true`
         const legoColection = client.db("BDLego").collection("legoToys");
 
+        // All Toys API
         app.get('/alllego', async (req, res) => {
             const cursor = legoColection.find({});
             const alllego = await cursor.toArray();
             res.send(alllego);
         });
+        // My Toys API Using Emal as a query
         app.get('/mytoys', async (req, res) => {
             const quary = req.query;
             const cursor = legoColection.find(quary);
             const alllego = await cursor.toArray();
             res.send(alllego);
         });
-
+        // Single Toy API Using ID as a query
         app.get('/lego', async (req, res) => {
             const query = req.query;
             const lego = await legoColection.findOne(query);
