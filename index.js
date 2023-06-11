@@ -11,6 +11,7 @@ const uri = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@clust
 // use middleware
 app.use(cors());
 app.use(express.json());
+
 // Home page
 app.get('/', (req, res) => {
     res.send('Server is running');
@@ -24,12 +25,10 @@ const client = new MongoClient(uri, {
         deprecationErrors: true,
     }
 });
-
 async function run() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        // await client.connect(); // This is not required if `autoConnect` is set to `true`
         // Create Problem in vercel
+        // await client.connect(); // This is not required if `autoConnect` is set to `true`
         const legoColection = client.db("BDLego").collection("legoToys");
 
         app.get('/alllego', async (req, res) => {
