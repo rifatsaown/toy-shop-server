@@ -44,6 +44,17 @@ async function run() {
             const alllego = await cursor.toArray();
             res.send(alllego);
         });
+
+        // My Toys API Using Emal as a query and sorting by price
+        app.get('/sort', async (req, res) => {
+            const quary = req.query;
+            const options = { sort: { price: 1 } };
+            const cursor = legoColection.find(quary , options);
+            const alllego = await cursor.toArray();
+            res.send(alllego);
+        });
+
+
         // Data Get As per Name Of the Toy
         app.get('/lego', async (req, res) => {
             const query = req.query;
